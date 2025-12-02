@@ -122,6 +122,8 @@ OPENAI_MODEL=gpt-4o-mini
 ### 5. Run FastAPI backend
 uvicorn app.main:app --reload
 
+
+---
 📡 API Endpoints
 Sentiment
 
@@ -148,7 +150,8 @@ POST /api/ai/qa
 {
   "question": "When is the next race?"
 }
-
+------
+👩‍💻 Author & Project Lead
 This project was collaboratively developed by:
 
 Albatool Moathen – Lead Developer, System Architect, and F1 Q&A / Agents Developer
