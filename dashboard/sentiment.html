@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>F1 Smart Assistant – Sentiment Analysis</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="dashboard-body">
+    <div class="dashboard-shell">
+      <!-- ========== SIDEBAR ========== -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-badge">
+            <img src="../assets/img/f1-logo.png" alt="F1 logo" />
+          </div>
+          <div class="app-title">
+            <div class="app-title-main">F1 Smart Assistant</div>
+            <div class="app-title-sub">INTELLIGENT RACE INSIGHTS</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="nav-section-title">Main</div>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html" class="nav-link">
+                <span class="icon">🏠</span>
+                <span>Overview</span>
+              </a>
+            </li>
+            <li>
+              <a href="sentiment.html" class="nav-link active">
+                <span class="icon">📊</span>
+                <span>Sentiment Analysis</span>
+              </a>
+            </li>
+            <li>
+              <a href="summary.html" class="nav-link">
+                <span class="icon">📝</span>
+                <span>Summary Generator</span>
+              </a>
+            </li>
+            <li>
+              <a href="qa.html" class="nav-link">
+                <span class="icon">💬</span>
+                <span>Q&amp;A Assistant</span>
+              </a>
+            </li>
+            <li>
+              <a href="profile.html" class="nav-link">
+                <span class="icon">👤</span>
+                <span>Profile</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-footer">
+          Check race mood in seconds: fans, radio, or live text.
+        </div>
+      </aside>
+
+      <!-- ========== MAIN ========== -->
+      <main class="dashboard-main">
+        <header class="main-header">
+          <div class="main-header-title">
+            <h1>Sentiment Analysis</h1>
+            <p class="main-header-subtitle">
+              Paste F1 commentary, tweets, or news and see if the mood is
+              positive, neutral, or negative – works in English and Arabic.
+            </p>
+          </div>
+          <div class="header-pills">
+            <div class="pill pill-muted" id="sentiment-status">
+              Paste text and click “Analyze mood”.
+            </div>
+          </div>
+        </header>
+
+        <section class="tool-layout">
+          <!-- LEFT: INPUT -->
+          <section class="tool-card sentiment-card">
+            <div class="tool-input-header">
+              <div class="tool-input-title">
+                <h2>Text input</h2>
+                <p>
+                  Ideal for live commentary, social media threads, or news
+                  excerpts.
+                </p>
+              </div>
+              <div class="tool-input-actions">
+                <label
+                  style="
+                    font-size: 12px;
+                    color: var(--text-muted);
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                  "
+                >
+                  Language
+                  <select id="sentiment-language" class="tool-select">
+                    <option value="auto" selected>Auto (EN / AR)</option>
+                    <option value="en">English</option>
+                    <option value="ar">Arabic</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <form id="sentiment-form" class="tool-form">
+              <label for="sentiment-text" class="field-label">
+                Commentary / tweets
+              </label>
+              <textarea
+                id="sentiment-text"
+                class="tool-textarea"
+                rows="8"
+                placeholder="Paste F1 race commentary, fan tweets, or news here..."
+              ></textarea>
+
+              <div
+                style="
+                  margin-top: 12px;
+                  display: flex;
+                  justify-content: flex-end;
+                "
+              >
+                <button type="submit" class="btn">
+                  <span>Analyze mood</span> <span>🚦</span>
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <!-- RIGHT: RESULT -->
+          <section class="tool-card sentiment-result-card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Result</h2>
+                <p class="card-subtitle">
+                  Quick classification with optional explanation.
+                </p>
+              </div>
+              <span class="badge">
+                <span>Mode</span>
+                <strong>Single label</strong>
+              </span>
+            </div>
+
+            <div id="sentiment-result" class="sentiment-result empty-state">
+              <p>No analysis yet. Paste some text and click “Analyze mood”.</p>
+            </div>
+
+            <div id="sentiment-extra" class="sentiment-extra hidden">
+              <p class="sentiment-label">
+                <span class="badge" id="sentiment-label-badge">–</span>
+              </p>
+              <p class="sentiment-score">
+                Confidence: <span id="sentiment-score-value">–</span>
+              </p>
+              <p class="sentiment-explanation" id="sentiment-explanation"></p>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <!-- ملاحظة: ما استخدمنا ai-tools.js هنا، سكربت خاص بالصفحة -->
+    <script>
+      const API_BASE = "http://127.0.0.1:8000/api";
+
+      window.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("sentiment-form");
+        const input = document.getElementById("sentiment-text");
+        const langSelect = document.getElementById("sentiment-language");
+        const resultBox = document.getElementById("sentiment-result");
+        const statusEl = document.getElementById("sentiment-status");
+        const extraBox = document.getElementById("sentiment-extra");
+        const labelBadge = document.getElementById("sentiment-label-badge");
+        const scoreEl = document.getElementById("sentiment-score-value");
+        const explEl = document.getElementById("sentiment-explanation");
+
+        if (!form || !input || !resultBox) return;
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const text = input.value.trim();
+          const language = langSelect ? langSelect.value : "auto";
+
+          if (!text) {
+            resultBox.textContent = "Please paste some text first.";
+            if (statusEl) {
+              statusEl.textContent = "Paste text and click “Analyze mood”.";
+            }
+            if (extraBox) extraBox.classList.add("hidden");
+            return;
+          }
+
+          resultBox.classList.remove("empty-state");
+          resultBox.textContent = "Analyzing mood…";
+          if (statusEl) statusEl.textContent = "Contacting sentiment agent…";
+          if (extraBox) extraBox.classList.add("hidden");
+
+          try {
+            const res = await fetch(`${API_BASE}/ai/sentiment`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ text, language }),
+            });
+
+            if (!res.ok) {
+              throw new Error("HTTP " + res.status);
+            }
+
+            const data = await res.json();
+            const label = data.label || data.sentiment || "neutral";
+            const score =
+              typeof data.score === "number" ? data.score : 0.0;
+            const explanation = data.explanation || "";
+
+            resultBox.textContent = `Detected sentiment: ${label}`;
+            if (statusEl)
+              statusEl.textContent = "Sentiment analyzed successfully.";
+
+            if (extraBox) extraBox.classList.remove("hidden");
+            if (labelBadge) labelBadge.textContent = label;
+            if (scoreEl) {
+              const pct = Math.round(Math.abs(score) * 100);
+              scoreEl.textContent =
+                score === 0 ? "–" : `${pct}% (${score.toFixed(2)})`;
+            }
+            if (explEl) explEl.textContent = explanation;
+          } catch (err) {
+            console.error("Sentiment error", err);
+            resultBox.textContent =
+              "Error calling sentiment API. Check backend console.";
+            if (statusEl)
+              statusEl.textContent =
+                "Error: could not contact sentiment backend.";
+            if (extraBox) extraBox.classList.add("hidden");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

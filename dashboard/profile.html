@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>F1 Smart Assistant – Profile</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="dashboard-body">
+    <div class="dashboard-shell">
+      <!-- ========== SIDEBAR ========== -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-badge">
+            <img src="../assets/img/f1-logo.png" alt="F1 logo" />
+          </div>
+          <div class="app-title">
+            <div class="app-title-main">F1 Smart Assistant</div>
+            <div class="app-title-sub">INTELLIGENT RACE INSIGHTS</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="nav-section-title">Main</div>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html" class="nav-link">
+                <span class="icon">🏠</span>
+                <span>Overview</span>
+              </a>
+            </li>
+            <li>
+              <a href="sentiment.html" class="nav-link">
+                <span class="icon">📊</span>
+                <span>Sentiment Analysis</span>
+              </a>
+            </li>
+            <li>
+              <a href="summary.html" class="nav-link">
+                <span class="icon">📝</span>
+                <span>Summary Generator</span>
+              </a>
+            </li>
+            <li>
+              <a href="qa.html" class="nav-link">
+                <span class="icon">💬</span>
+                <span>Q&A Assistant</span>
+              </a>
+            </li>
+            <li>
+              <a href="profile.html" class="nav-link active">
+                <span class="icon">👤</span>
+                <span>Profile</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-footer">
+          This page is UI-only for now; later you can connect it to an API.
+        </div>
+      </aside>
+
+      <!-- ========== MAIN PANEL ========== -->
+      <main class="dashboard-main">
+        <header class="main-header">
+          <div class="main-header-title">
+            <h1>Profile &amp; Settings</h1>
+            <p class="main-header-subtitle">
+              Customize your F1 preferences, language, and favourite team logo.
+            </p>
+          </div>
+          <div class="header-pills">
+            <div class="pill pill-muted">LOCAL ONLY · DEMO</div>
+          </div>
+        </header>
+
+        <section class="profile-card card">
+          <h2 class="card-title">Account details</h2>
+          <p class="card-subtitle">
+            Values here are stored only in this browser. Saving will not contact any server.
+          </p>
+
+          <div class="profile-grid">
+            <div class="profile-field">
+              <label for="profile-name">Display name</label>
+              <input
+                id="profile-name"
+                type="text"
+                placeholder="Your name"
+              />
+            </div>
+
+            <div class="profile-field">
+              <label for="profile-email">Email</label>
+              <input
+                id="profile-email"
+                type="email"
+                placeholder="you@example.com"
+              />
+            </div>
+
+            <div class="profile-field">
+              <label for="profile-driver">Favourite driver</label>
+              <input
+                id="profile-driver"
+                type="text"
+                placeholder="Hamilton, Leclerc, Max..."
+              />
+            </div>
+
+            <div class="profile-field">
+              <label for="profile-language">Language preference</label>
+              <input
+                id="profile-language"
+                type="text"
+                placeholder="EN, AR, or both"
+              />
+            </div>
+
+            <div class="profile-field">
+              <label for="profile-timezone">Time zone</label>
+              <input
+                id="profile-timezone"
+                type="text"
+                placeholder="e.g. Asia/Riyadh"
+              />
+            </div>
+
+            <div class="profile-field">
+              <label for="profile-team">Favourite team (for logo)</label>
+              <select id="profile-team">
+                <option value="">Choose a team…</option>
+                <option value="Red Bull Racing">Red Bull Racing</option>
+                <option value="Ferrari">Ferrari</option>
+                <option value="Mercedes">Mercedes</option>
+                <option value="McLaren">McLaren</option>
+                <option value="Aston Martin">Aston Martin</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <button id="profile-save" class="primary-button">
+              💾 Save (UI only)
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Script: save / load profile into localStorage -->
+    <script>
+      const STORAGE_KEY = "f1-profile-state";
+
+      const nameInput = document.getElementById("profile-name");
+      const emailInput = document.getElementById("profile-email");
+      const driverInput = document.getElementById("profile-driver");
+      const langInput = document.getElementById("profile-language");
+      const tzInput = document.getElementById("profile-timezone");
+      const teamSelect = document.getElementById("profile-team");
+      const saveBtn = document.getElementById("profile-save");
+
+      function loadProfile() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return;
+          const data = JSON.parse(raw);
+
+          if (nameInput) nameInput.value = data.name || "";
+          if (emailInput) emailInput.value = data.email || "";
+          if (driverInput) driverInput.value = data.driver || "";
+          if (langInput) langInput.value = data.lang || "";
+          if (tzInput) tzInput.value = data.timezone || "";
+          if (teamSelect && data.team) teamSelect.value = data.team;
+        } catch (e) {
+          console.warn("Could not load profile", e);
+        }
+      }
+
+      function saveProfile() {
+        const data = {
+          name: nameInput ? nameInput.value.trim() : "",
+          email: emailInput ? emailInput.value.trim() : "",
+          driver: driverInput ? driverInput.value.trim() : "",
+          lang: langInput ? langInput.value.trim() : "",
+          timezone: tzInput ? tzInput.value.trim() : "",
+          team: teamSelect ? teamSelect.value : "",
+        };
+
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        } catch (e) {
+          console.error("Could not save profile", e);
+          alert("Could not save profile in this browser.");
+          return;
+        }
+
+        const original = saveBtn.textContent;
+        saveBtn.textContent = "Saved ✔ (UI only)";
+        saveBtn.style.background = "#22c55e";
+
+        setTimeout(() => {
+          saveBtn.textContent = original;
+          saveBtn.style.background = "";
+        }, 1500);
+      }
+
+      window.addEventListener("DOMContentLoaded", loadProfile);
+      saveBtn.addEventListener("click", saveProfile);
+    </script>
+  </body>
+</html>

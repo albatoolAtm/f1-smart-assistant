@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>F1 Smart Assistant – Home</title>
+  <!-- لاحظي: هنا نستخدم home.css مو styles.css -->
+  <link rel="stylesheet" href="assets/home.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+
+<body>
+
+  <!-- TOP HEADER -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+
+      <!-- LOGO -->
+      <a href="index.html" class="logo-mark">
+        <div class="logo-circle">
+          <img src="assets/img/f1-logo.png" alt="F1 Logo" />
+        </div>
+        <div>
+          <div class="logo-text-main">F1 Smart Assistant</div>
+          <div class="logo-text-sub">INTELLIGENT RACE INSIGHTS</div>
+        </div>
+      </a>
+
+      <!-- NAV -->
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="features.html" class="nav-link">Features</a>
+        <a href="about.html" class="nav-link">About</a>
+        <div class="nav-auth">
+          <a href="auth.html" class="nav-login">Log in</a>
+          <a href="auth.html" class="nav-cta">🏁 Join the Grid</a>
+        </div>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+
+      <div class="hero-content">
+        <h1>Your Intelligent Race Companion.</h1>
+        <p>
+          Real-time insights for Formula 1 fans: sentiment analysis, race summaries,
+          Q&A intelligence — all in one clean digital pit wall.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="dashboard/index.html" class="btn-primary">🔋 Enter Garage</a>
+          <a href="features.html" class="learn-more">Learn more →</a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="assets/img/f1-hero.png" alt="F1 Car" />
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="container">
+      <h2>What you can do</h2>
+
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="icon">📊</div>
+          <h3>Sentiment Analysis</h3>
+          <p>Instantly read fan reactions to overtakes, penalties, and pit-strategy calls.</p>
+          <a href="dashboard/sentiment.html" class="link-btn">➡️ Get Started</a>
+        </div>
+
+        <div class="feature-card">
+          <div class="icon">📝</div>
+          <h3>AI Summary Generator</h3>
+          <p>Turn race reports and long articles into clean, fast one-minute summaries.</p>
+          <a href="dashboard/summary.html" class="link-btn">➡️ Try It</a>
+        </div>
+
+        <div class="feature-card">
+          <div class="icon">💬</div>
+          <h3>F1 Q&A Assistant</h3>
+          <p>Ask anything — rules, tyre strategy, history, DRS zones, team logic.</p>
+          <a href="dashboard/qa.html" class="link-btn">➡️ Ask a Question</a>
+        </div>
+
+      </div>
+
+      <p class="footer-note">
+        Student project · Designed for learning, experimentation, and F1 passion.
+      </p>
+    </div>
+  </section>
+
+</body>
+</html>

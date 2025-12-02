@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>F1 Smart Assistant – Features</title>
+  <link rel="stylesheet" href="assets/home.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a href="index.html" class="logo-mark">
+        <div class="logo-circle">
+          <img src="assets/img/f1-logo.png" alt="F1 Logo" />
+        </div>
+        <div>
+          <div class="logo-text-main">F1 Smart Assistant</div>
+          <div class="logo-text-sub">INTELLIGENT RACE INSIGHTS</div>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="features.html" class="nav-link active">Features</a>
+        <a href="about.html" class="nav-link">About</a>
+        <div class="nav-auth">
+          <a href="auth.html" class="nav-login">Log in</a>
+          <a href="auth.html" class="nav-cta">🏁 Join the Grid</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO (صغير للتعريف بالفيتشرز) -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <h1>Tools built for F1 fans.</h1>
+        <p>
+          Each feature is designed to help you understand the race faster:
+          live mood, clean summaries, and explainable Q&A – all in English or Arabic.
+        </p>
+        <div class="hero-buttons">
+          <a href="dashboard/index.html" class="btn-primary">🔧 Open Dashboard</a>
+          <a href="index.html" class="learn-more">← Back to Home</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="assets/img/f1-dashboard.png" alt="Dashboard preview" />
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES LIST -->
+  <section class="features">
+    <div class="container">
+      <h2>Main features</h2>
+
+      <div class="features-grid">
+        <!-- Sentiment -->
+        <div class="feature-card">
+          <div class="icon">📊</div>
+          <h3>Sentiment Analysis</h3>
+          <p>
+            Paste race commentary, fan tweets, or news, and instantly see whether
+            the mood is positive, negative, or neutral – with support for EN / AR.
+          </p>
+          <p>
+            Great for understanding how fans react to penalties, safety car
+            periods, and late overtakes.
+          </p>
+          <a href="dashboard/sentiment.html" class="link-btn">➡️ Try Sentiment</a>
+        </div>
+
+        <!-- Summary -->
+        <div class="feature-card">
+          <div class="icon">📝</div>
+          <h3>AI Summary Generator</h3>
+          <p>
+            Turn long race reports, strategy breakdowns, and news articles into
+            short, structured bullet points or paragraphs.
+          </p>
+          <p>
+            Perfect when you missed the race and want the key story in under a minute.
+          </p>
+          <a href="dashboard/summary.html" class="link-btn">➡️ Generate a Summary</a>
+        </div>
+
+        <!-- Q&A -->
+        <div class="feature-card">
+          <div class="icon">💬</div>
+          <h3>F1 Q&A Assistant</h3>
+          <p>
+            Paste any F1 text (regulations, race notes, analysis) and ask specific
+            questions like “Why was this penalty given?” or “Why double-stack here?”.
+          </p>
+          <p>
+            The answer always stays grounded in your text – no outside spoilers.
+          </p>
+          <a href="dashboard/qa.html" class="link-btn">➡️ Ask a Question</a>
+        </div>
+      </div>
+
+      <h2 style="margin-top: 48px;">Extra touches</h2>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="icon">🌍</div>
+          <h3>Multilingual support</h3>
+          <p>
+            Designed for English and Arabic. You can mix both in the same analysis,
+            which is perfect for Saudi and regional fans.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="icon">🧠</div>
+          <h3>AI-powered, student-built</h3>
+          <p>
+            Built as a learning project to explore real-world AI use cases in
+            sports analytics, UX, and data visualization.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="icon">🛡️</div>
+          <h3>Local / demo mode</h3>
+          <p>
+            In this version, everything runs in “practice mode” – your inputs are
+            not stored in a backend database.
+          </p>
+        </div>
+      </div>
+
+      <p class="footer-note">
+        Tip: You can jump straight into the live tools from the dashboard once you log in.
+      </p>
+    </div>
+  </section>
+</body>
+</html>

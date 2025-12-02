@@ -1,0 +1,14 @@
+[
+  {
+    "text": "Hamilton pitted for medium tires on lap 30 due to tyre temps rising rapidly.",
+    "source": "fastf1_log"
+  },
+  {
+    "text": "The average lap time increased by 0.8s after lap 28 for car 44.",
+    "source": "telemetry"
+  },
+  {
+    "text": "Pit stop strategies varied across teams based on tyre compounds.",
+    "source": "news"
+  }
+]

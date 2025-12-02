@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>F1 Smart Assistant – Summary Generator</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+
+  <body class="dashboard-body">
+    <div class="dashboard-shell">
+      <!-- ========== SIDEBAR ========== -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-badge">
+            <img src="../assets/img/f1-logo.png" alt="F1 logo" />
+          </div>
+          <div class="app-title">
+            <div class="app-title-main">F1 Smart Assistant</div>
+            <div class="app-title-sub">INTELLIGENT RACE INSIGHTS</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="nav-section-title">Main</div>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html" class="nav-link">
+                <span class="icon">🏠</span>
+                <span>Overview</span>
+              </a>
+            </li>
+            <li>
+              <a href="sentiment.html" class="nav-link">
+                <span class="icon">📊</span>
+                <span>Sentiment Analysis</span>
+              </a>
+            </li>
+            <li>
+              <a href="summary.html" class="nav-link active">
+                <span class="icon">📝</span>
+                <span>Summary Generator</span>
+              </a>
+            </li>
+            <li>
+              <a href="qa.html" class="nav-link">
+                <span class="icon">💬</span>
+                <span>Q&A Assistant</span>
+              </a>
+            </li>
+            <li>
+              <a href="profile.html" class="nav-link">
+                <span class="icon">👤</span>
+                <span>Profile</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-footer">
+          Turn long race reports into quick insights.
+        </div>
+      </aside>
+
+      <!-- ========== MAIN ========== -->
+      <main class="dashboard-main">
+        <header class="main-header">
+          <div class="main-header-title">
+            <h1>Summary Generator</h1>
+            <p class="main-header-subtitle">
+              Paste race reports, strategy breakdowns, or news and get a clean
+              summary.
+            </p>
+          </div>
+          <div class="header-pills">
+            <div class="pill pill-muted" id="summary-status">
+              Choose a length and generate a summary.
+            </div>
+          </div>
+        </header>
+
+        <section class="tool-layout">
+          <!-- LEFT: INPUT -->
+          <section class="tool-card">
+            <div class="tool-input-header">
+              <div class="tool-input-title">
+                <h2>Original text</h2>
+                <p>
+                  Ideal for full-race write-ups, technical articles, or FIA
+                  statements.
+                </p>
+              </div>
+              <div class="tool-input-actions">
+                <label
+                  style="
+                    font-size: 12px;
+                    color: var(--text-muted);
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                  "
+                >
+                  Length
+                  <select id="summary-length">
+                    <option value="short">Short (1–2 lines)</option>
+                    <option value="medium" selected>
+                      Medium (bullet-style)
+                    </option>
+                    <option value="long">Detailed paragraph</option>
+                  </select>
+                </label>
+                <button type="button" class="btn-ghost" id="summary-clear">
+                  Clear
+                </button>
+              </div>
+            </div>
+
+            <textarea
+              id="summary-input"
+              placeholder="Paste the full race report, analysis, or article here..."
+            ></textarea>
+
+            <div
+              style="
+                margin-top: 12px;
+                display: flex;
+                justify-content: flex-end;
+              "
+            >
+              <button id="summary-generate-btn" class="btn" type="button">
+                <span>Generate summary</span> <span>⚙️</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- RIGHT: SUMMARY OUTPUT -->
+          <section class="tool-card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Summary</h2>
+                <p class="card-subtitle">
+                  Focused on key events, strategies, and final results.
+                </p>
+              </div>
+              <span class="badge">
+                <span>Format</span>
+                <strong id="summary-format-label">Auto</strong>
+              </span>
+            </div>
+
+            <div
+              id="summary-output"
+              style="
+                font-size: 13px;
+                line-height: 1.6;
+                color: #e5e7eb;
+                min-height: 120px;
+              "
+            >
+              The generated summary will appear here. You can copy it into
+              slides, reports, or social posts.
+            </div>
+
+            <div class="result-grid" style="margin-top: 16px;">
+              <div class="result-chip">
+                <label>Reading time</label>
+                <strong id="summary-reading-time">–</strong>
+              </div>
+              <div class="result-chip">
+                <label>Compression</label>
+                <strong id="summary-compression">–</strong>
+              </div>
+              <div class="result-chip">
+                <label>Language</label>
+                <strong id="summary-lang">Auto detect</strong>
+              </div>
+              <div class="result-chip">
+                <label>Best use</label>
+                <strong id="summary-use">Slides · Reports · Notes</strong>
+              </div>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <!-- سكربت الـ Profile البسيط (اختياري، نفس نمط باقي الصفحات) -->
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const data = JSON.parse(localStorage.getItem("f1-user-profile"));
+        if (!data) return;
+
+        const userName = document.querySelector(".user-name");
+        if (userName) userName.textContent = data.name || "Guest";
+
+        const logoImg = document.querySelector(".team-logo-img");
+        if (logoImg) {
+          const team = data.team || "Red Bull Racing";
+          logoImg.src = `../assets/img/teams/${team
+            .toLowerCase()
+            .replace(/ /g, "")}.png`;
+        }
+      });
+    </script>
+
+    <!-- سكربت صفحة الـ Summary -->
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const inputEl = document.getElementById("summary-input");
+        const generateBtn = document.getElementById("summary-generate-btn");
+        const clearBtn = document.getElementById("summary-clear");
+        const statusEl = document.getElementById("summary-status");
+        const lengthSelect = document.getElementById("summary-length");
+        const outputEl = document.getElementById("summary-output");
+        const formatLabelEl = document.getElementById("summary-format-label");
+        const readingTimeEl = document.getElementById("summary-reading-time");
+        const compressionEl = document.getElementById("summary-compression");
+        const langEl = document.getElementById("summary-lang");
+
+        const SUMMARY_API_URL = "http://127.0.0.1:8000/api/ai/summary";
+
+
+        function detectLanguage(text) {
+          const arabicRegex = /[\u0600-\u06FF]/;
+          return arabicRegex.test(text) ? "ar" : "en";
+        }
+
+        function updateMetrics(original, summarized) {
+          const originalWords = original.split(/\s+/).filter(Boolean).length;
+          const summaryWords = summarized.split(/\s+/).filter(Boolean).length;
+
+          if (!summaryWords) {
+            readingTimeEl.textContent = "–";
+          } else {
+            const minutes = summaryWords / 200;
+            if (minutes < 0.5) {
+              readingTimeEl.textContent = "< 30 sec";
+            } else {
+              readingTimeEl.textContent = `${Math.max(
+                1,
+                Math.round(minutes)
+              )} min`;
+            }
+          }
+
+          if (originalWords && summaryWords) {
+            const ratio = (summaryWords / originalWords) * 100;
+            const compression = Math.round(100 - ratio);
+            compressionEl.textContent = `${compression}% shorter`;
+          } else {
+            compressionEl.textContent = "–";
+          }
+        }
+
+        function updateFormatLabel(length) {
+          if (length === "short") {
+            formatLabelEl.textContent = "Ultra-brief";
+          } else if (length === "medium") {
+            formatLabelEl.textContent = "Bullets";
+          } else if (length === "long") {
+            formatLabelEl.textContent = "Detailed";
+          } else {
+            formatLabelEl.textContent = "Auto";
+          }
+        }
+
+        if (clearBtn) {
+          clearBtn.addEventListener("click", () => {
+            inputEl.value = "";
+            outputEl.textContent =
+              "The generated summary will appear here. You can copy it into slides, reports, or social posts.";
+            readingTimeEl.textContent = "–";
+            compressionEl.textContent = "–";
+            langEl.textContent = "Auto detect";
+            statusEl.textContent = "Paste text and generate a new summary.";
+          });
+        }
+
+        if (generateBtn) {
+          generateBtn.addEventListener("click", async () => {
+            const text = inputEl.value.trim();
+            if (!text) {
+              statusEl.textContent = "Please paste some text first.";
+              return;
+            }
+
+            const length = lengthSelect.value;
+            const language = detectLanguage(text);
+
+            langEl.textContent =
+              language === "ar" ? "Arabic (auto)" : "English (auto)";
+            updateFormatLabel(length);
+
+            const originalButtonHTML = generateBtn.innerHTML;
+            generateBtn.disabled = true;
+            generateBtn.innerHTML =
+              "<span>Generating...</span> <span>⏳</span>";
+            statusEl.textContent = "Generating summary with F1 assistant...";
+
+            try {
+              const resp = await fetch(SUMMARY_API_URL, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  text,
+                  language,
+                  length,
+                }),
+              });
+
+              if (!resp.ok) {
+                throw new Error("HTTP " + resp.status);
+              }
+
+              const data = await resp.json();
+              const summaryText =
+                data.summary || data.result || data.answer || "";
+
+              if (!summaryText) {
+                outputEl.textContent = "No summary returned from the API.";
+              } else {
+                outputEl.textContent = summaryText;
+              }
+
+              updateMetrics(text, summaryText);
+              statusEl.textContent = "Summary generated successfully.";
+            } catch (err) {
+              console.error("Summary error", err);
+              statusEl.textContent =
+                "Error: could not generate summary. Check the backend console.";
+              outputEl.textContent =
+                "Something went wrong while calling the summary API.";
+              readingTimeEl.textContent = "–";
+              compressionEl.textContent = "–";
+            } finally {
+              generateBtn.disabled = false;
+              generateBtn.innerHTML = originalButtonHTML;
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

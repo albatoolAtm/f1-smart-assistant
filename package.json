@@ -1,0 +1,15 @@
+{
+  "name": "f1-smart-assistant",
+  "version": "1.0.0",
+  "description": "Frontend UI for F1 Smart Assistant project",
+  "main": "index.js",
+  "scripts": {
+    "start": "lite-server",
+    "dev": "lite-server"
+  },
+  "author": "Albatool",
+  "license": "MIT",
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  }
+}

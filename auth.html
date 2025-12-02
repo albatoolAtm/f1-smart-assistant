@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>F1 Smart Assistant – Log in</title>
+  <link rel="stylesheet" href="assets/home.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <a href="index.html" class="logo-mark">
+        <div class="logo-circle">
+          <img src="assets/img/f1-logo.png" alt="F1 Logo" />
+        </div>
+        <div>
+          <div class="logo-text-main">F1 Smart Assistant</div>
+          <div class="logo-text-sub">INTELLIGENT RACE INSIGHTS</div>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="features.html" class="nav-link">Features</a>
+        <a href="about.html" class="nav-link">About</a>
+        <div class="nav-auth">
+          <a href="auth.html" class="nav-login">Log in</a>
+          <a href="auth.html" class="nav-cta">🏁 Join the Grid</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- AUTH CONTENT -->
+  <section class="auth-section">
+    <div class="container auth-wrapper">
+      <div class="auth-card">
+        <h1>Log in to your garage</h1>
+        <p class="auth-subtitle">
+          Practice mode only – this UI simulates how a real login page would look.
+        </p>
+
+        <!-- اضفنا id للفورم عشان نستخدمه في السكربت -->
+        <form class="auth-form" id="login-form">
+          <div class="auth-field">
+            <label for="email">Email address</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+
+          <div class="auth-field">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              required
+            />
+          </div>
+
+          <div class="auth-meta">
+            <label class="auth-remember">
+              <input type="checkbox" />
+              <span>Remember me on this device</span>
+            </label>
+            <a href="#" class="auth-link">Forgot password?</a>
+          </div>
+
+          <div class="auth-actions">
+            <button type="submit" class="btn-primary auth-submit">
+              🔑 Log in
+            </button>
+            <p class="auth-note">
+              Don’t have an account? <a href="#" class="auth-link">Use guest mode</a>
+              or go back to <a href="index.html" class="auth-link">home</a>.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- سكربت بسيط للتعامل مع تسجيل الدخول في وضع Practice -->
+  <script>
+    const form = document.getElementById("login-form");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault(); // ما نرسل الفورم للسيرفر
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!email || !password) {
+        alert("Please enter email and password.");
+        return;
+      }
+
+      // هنا ممكن لاحقاً تضيفي تحقق حقيقي من API
+      // حالياً: لو في بيانات → نروح للداشبورد
+      window.location.href = "dashboard/index.html";
+    });
+  </script>
+</body>
+</html>

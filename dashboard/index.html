@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>F1 Smart Assistant – Dashboard</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+
+  <body class="dashboard-body">
+    <div class="dashboard-shell">
+      <!-- ========== SIDEBAR ========== -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-badge">
+            <!-- F1 logo INSIDE the circular badge -->
+            <img src="../assets/img/f1-logo.png" alt="F1 logo" />
+          </div>
+          <div class="app-title">
+            <div class="app-title-main">F1 Smart Assistant</div>
+            <div class="app-title-sub">INTELLIGENT RACE INSIGHTS</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="nav-section-title">Main</div>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html" class="nav-link active">
+                <span class="icon">🏠</span>
+                <span>Overview</span>
+              </a>
+            </li>
+            <li>
+              <a href="sentiment.html" class="nav-link">
+                <span class="icon">📊</span>
+                <span>Sentiment Analysis</span>
+              </a>
+            </li>
+            <li>
+              <a href="summary.html" class="nav-link">
+                <span class="icon">📝</span>
+                <span>Summary Generator</span>
+              </a>
+            </li>
+            <li>
+              <a href="qa.html" class="nav-link">
+                <span class="icon">💬</span>
+                <span>Q&A Assistant</span>
+              </a>
+            </li>
+            <li>
+              <a href="profile.html" class="nav-link">
+                <span class="icon">👤</span>
+                <span>Profile</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-footer">
+          Guest mode · Your data stays in this browser.
+        </div>
+      </aside>
+
+      <!-- ========== MAIN PANEL ========== -->
+      <main class="dashboard-main">
+        <header class="main-header">
+          <div class="main-header-title">
+            <h1>Race Weekend Overview</h1>
+            <p class="main-header-subtitle">
+              Snapshot of your activity across sentiment, summaries, and Q&A.
+            </p>
+          </div>
+          <div class="header-pills">
+            <div class="pill pill-danger">LIVE BETA</div>
+            <div class="pill pill-muted">GUEST USER · EN / AR</div>
+          </div>
+        </header>
+
+        <section class="overview-layout">
+          <!-- LEFT SIDE -->
+          <section class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Session stats</h2>
+                <p class="card-subtitle">
+                  Numbers update as you use the tools.
+                </p>
+              </div>
+              <span class="badge">GP · Practice mode</span>
+            </div>
+
+            <div class="overview-stats-row">
+              <div class="stat-chip">
+                <div class="stat-label">Texts analyzed</div>
+                <div class="stat-value" id="stat-texts">0</div>
+                <div class="stat-foot">Waiting for first analysis</div>
+              </div>
+
+              <div class="stat-chip">
+                <div class="stat-label">Most used tool</div>
+                <div class="stat-value" id="stat-top-tool">—</div>
+                <div class="stat-foot">Try Sentiment first</div>
+              </div>
+
+              <div class="stat-chip">
+                <div class="stat-label">Last action</div>
+                <div class="stat-value" id="stat-last-tool">—</div>
+                <div class="stat-foot">No activity yet</div>
+              </div>
+            </div>
+
+            <div class="tools-row">
+              <div class="tool-mini-card">
+                <div class="tool-mini-title">Sentiment Analysis</div>
+                <div class="tool-mini-body">
+                  Detect the mood in race commentary and fan tweets.
+                </div>
+              </div>
+
+              <div class="tool-mini-card">
+                <div class="tool-mini-title">Summary Generator</div>
+                <div class="tool-mini-body">
+                  Turn long race reports into concise summaries.
+                </div>
+              </div>
+
+              <div class="tool-mini-card">
+                <div class="tool-mini-title">Q&A Assistant</div>
+                <div class="tool-mini-body">
+                  Ask questions about race text and get precise answers.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- RIGHT SIDE – USER & FAV TEAM CARD -->
+          <section class="card fav-team-card">
+            <div class="fav-team-meta">
+              <span class="label">USER</span>
+              <span class="value" id="overview-user-name">Guest</span>
+
+              <span class="label" style="margin-top: 10px;">FAVOURITE TEAM</span>
+              <span class="value" id="overview-team-name">Red Bull Racing</span>
+
+              <p class="card-subtitle" style="margin-top: 8px;">
+                Change this later from Profile to personalize the dashboard.
+              </p>
+            </div>
+
+            <div class="fav-team-avatar">
+              <img
+                id="overview-team-logo"
+                src="../assets/img/teams/redbull.png"
+                alt="Red Bull Racing logo"
+              />
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <!-- Script: read profile from localStorage and update card -->
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const STORAGE_KEY = "f1-profile-state";
+        let data = null;
+
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return;
+          data = JSON.parse(raw);
+        } catch (e) {
+          console.warn("No profile data in storage", e);
+          return;
+        }
+
+        const nameEl = document.getElementById("overview-user-name");
+        const teamNameEl = document.getElementById("overview-team-name");
+        const logoEl = document.getElementById("overview-team-logo");
+
+        // USER name
+        if (nameEl && data.name && data.name.trim() !== "") {
+          nameEl.textContent = data.name;
+        }
+
+        // Favourite team name
+        if (teamNameEl && data.team && data.team.trim() !== "") {
+          teamNameEl.textContent = data.team;
+        }
+
+        // Team logo
+        if (logoEl) {
+          const team = data.team || "Red Bull Racing";
+          const logoMap = {
+            "Red Bull Racing": "redbull.png",
+            Ferrari: "ferrari.png",
+            Mercedes: "mercedes.png",
+            McLaren: "mclaren.png",
+            "Aston Martin": "astonmartin.png",
+          };
+          const fileName = logoMap[team] || "redbull.png";
+
+          logoEl.src = "../assets/img/teams/" + fileName;
+          logoEl.alt = team + " logo";
+        }
+      });
+    </script>
+  </body>
+</html>

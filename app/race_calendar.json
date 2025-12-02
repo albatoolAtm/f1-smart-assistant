@@ -1,0 +1,268 @@
+{
+  "season": 2025,
+  "races": [
+    {
+      "round": 1,
+      "name": "Australian Grand Prix",
+      "date": "2025-03-16",
+      "location": "Albert Park Circuit",
+      "city": "Melbourne",
+      "country": "Australia"
+    },
+    {
+      "round": 2,
+      "name": "Chinese Grand Prix",
+      "date": "2025-03-23",
+      "location": "Shanghai International Circuit",
+      "city": "Shanghai",
+      "country": "China"
+    },
+    {
+      "round": 3,
+      "name": "Japanese Grand Prix",
+      "date": "2025-04-06",
+      "location": "Suzuka International Racing Course",
+      "city": "Suzuka",
+      "country": "Japan"
+    },
+    {
+      "round": 4,
+      "name": "Bahrain Grand Prix",
+      "date": "2025-04-13",
+      "location": "Bahrain International Circuit",
+      "city": "Sakhir",
+      "country": "Bahrain"
+    },
+    {
+      "round": 5,
+      "name": "Saudi Arabian Grand Prix",
+      "date": "2025-04-20",
+      "location": "Jeddah Corniche Circuit",
+      "city": "Jeddah",
+      "country": "Saudi Arabia"
+    },
+    {
+      "round": 6,
+      "name": "Miami Grand Prix",
+      "date": "2025-05-04",
+      "location": "Miami International Autodrome",
+      "city": "Miami",
+      "country": "United States"
+    },
+    {
+      "round": 7,
+      "name": "Emilia-Romagna Grand Prix",
+      "date": "2025-05-18",
+      "location": "Imola Circuit",
+      "city": "Imola",
+      "country": "Italy"
+    },
+    {
+      "round": 8,
+      "name": "Monaco Grand Prix",
+      "date": "2025-05-25",
+      "location": "Circuit de Monaco",
+      "city": "Monaco",
+      "country": "Monaco"
+    },
+    {
+      "round": 9,
+      "name": "Spanish Grand Prix",
+      "date": "2025-06-01",
+      "location": "Circuit de Barcelona-Catalunya",
+      "city": "Barcelona",
+      "country": "Spain"
+    },
+    {
+      "round": 10,
+      "name": "Canadian Grand Prix",
+      "date": "2025-06-15",
+      "location": "Circuit Gilles Villeneuve",
+      "city": "Montreal",
+      "country": "Canada"
+    },
+    {
+      "round": 11,
+      "name": "Austrian Grand Prix",
+      "date": "2025-06-29",
+      "location": "Red Bull Ring",
+      "city": "Spielberg",
+      "country": "Austria"
+    },
+    {
+      "round": 12,
+      "name": "British Grand Prix",
+      "date": "2025-07-06",
+      "location": "Silverstone Circuit",
+      "city": "Silverstone",
+      "country": "United Kingdom"
+    },
+    {
+      "round": 13,
+      "name": "Belgian Grand Prix",
+      "date": "2025-07-27",
+      "location": "Circuit de Spa-Francorchamps",
+      "city": "Stavelot",
+      "country": "Belgium"
+    },
+    {
+      "round": 14,
+      "name": "Hungarian Grand Prix",
+      "date": "2025-08-03",
+      "location": "Hungaroring",
+      "city": "Mogyoród",
+      "country": "Hungary"
+    },
+    {
+      "round": 15,
+      "name": "Dutch Grand Prix",
+      "date": "2025-08-31",
+      "location": "Circuit Zandvoort",
+      "city": "Zandvoort",
+      "country": "Netherlands"
+    },
+    {
+      "round": 16,
+      "name": "Italian Grand Prix",
+      "date": "2025-09-07",
+      "location": "Monza Circuit",
+      "city": "Monza",
+      "country": "Italy"
+    },
+    {
+      "round": 17,
+      "name": "Azerbaijan Grand Prix",
+      "date": "2025-09-21",
+      "location": "Baku City Circuit",
+      "city": "Baku",
+      "country": "Azerbaijan"
+    },
+    {
+      "round": 18,
+      "name": "Singapore Grand Prix",
+      "date": "2025-10-05",
+      "location": "Marina Bay Street Circuit",
+      "city": "Singapore",
+      "country": "Singapore"
+    },
+    {
+      "round": 19,
+      "name": "United States Grand Prix",
+      "date": "2025-10-19",
+      "location": "Circuit of The Americas",
+      "city": "Austin",
+      "country": "United States"
+    },
+    {
+      "round": 20,
+      "name": "Mexico City Grand Prix",
+      "date": "2025-10-26",
+      "location": "Autódromo Hermanos Rodríguez",
+      "city": "Mexico City",
+      "country": "Mexico"
+    },
+    {
+      "round": 21,
+      "name": "São Paulo Grand Prix",
+      "date": "2025-11-09",
+      "location": "Interlagos Circuit",
+      "city": "São Paulo",
+      "country": "Brazil"
+    },
+    {
+      "round": 22,
+      "name": "Las Vegas Grand Prix",
+      "date": "2025-11-22",
+      "location": "Las Vegas Strip Circuit",
+      "city": "Las Vegas",
+      "country": "United States"
+    },
+    {
+      "round": 23,
+      "name": "Qatar Grand Prix",
+      "date": "2025-11-30",
+      "location": "Lusail International Circuit",
+      "city": "Lusail",
+      "country": "Qatar"
+    },
+    {
+      "round": 24,
+      "name": "Abu Dhabi Grand Prix",
+      "date": "2025-12-07",
+      "location": "Yas Marina Circuit",
+      "city": "Abu Dhabi",
+      "country": "United Arab Emirates"
+    }
+  ],
+  "drivers": [
+    {
+      "number": 44,
+      "code": "HAM",
+      "name": "Lewis Hamilton",
+      "team": "Mercedes",
+      "country": "United Kingdom"
+    },
+    {
+      "number": 1,
+      "code": "VER",
+      "name": "Max Verstappen",
+      "team": "Red Bull Racing",
+      "country": "Netherlands"
+    },
+    {
+      "number": 16,
+      "code": "LEC",
+      "name": "Charles Leclerc",
+      "team": "Ferrari",
+      "country": "Monaco"
+    },
+    {
+      "number": 11,
+      "code": "PER",
+      "name": "Sergio Pérez",
+      "team": "Red Bull Racing",
+      "country": "Mexico"
+    },
+    {
+      "number": 63,
+      "code": "RUS",
+      "name": "George Russell",
+      "team": "Mercedes",
+      "country": "United Kingdom"
+    }
+  ],
+  "tracks": [
+    {
+      "name": "Jeddah Corniche Circuit",
+      "grand_prix": "Saudi Arabian Grand Prix",
+      "city": "Jeddah",
+      "country": "Saudi Arabia",
+      "length_km": 6.174,
+      "laps": 50
+    },
+    {
+      "name": "Bahrain International Circuit",
+      "grand_prix": "Bahrain Grand Prix",
+      "city": "Sakhir",
+      "country": "Bahrain",
+      "length_km": 5.412,
+      "laps": 57
+    },
+    {
+      "name": "Yas Marina Circuit",
+      "grand_prix": "Abu Dhabi Grand Prix",
+      "city": "Abu Dhabi",
+      "country": "United Arab Emirates",
+      "length_km": 5.281,
+      "laps": 58
+    },
+    {
+      "name": "Circuit de Monaco",
+      "grand_prix": "Monaco Grand Prix",
+      "city": "Monaco",
+      "country": "Monaco",
+      "length_km": 3.337,
+      "laps": 78
+    }
+  ]
+}

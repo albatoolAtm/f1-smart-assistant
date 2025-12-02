@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>F1 Smart Assistant – Q&A Assistant</title>
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+
+  <body class="dashboard-body">
+    <div class="dashboard-shell">
+      <!-- ========== SIDEBAR ========== -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-badge">
+            <img src="../assets/img/f1-logo.png" alt="F1 logo" />
+          </div>
+          <div class="app-title">
+            <div class="app-title-main">F1 Smart Assistant</div>
+            <div class="app-title-sub">INTELLIGENT RACE INSIGHTS</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="nav-section-title">Main</div>
+          <ul class="nav-list">
+            <li>
+              <a href="index.html" class="nav-link">
+                <span class="icon">🏠</span>
+                <span>Overview</span>
+              </a>
+            </li>
+            <li>
+              <a href="sentiment.html" class="nav-link">
+                <span class="icon">📊</span>
+                <span>Sentiment Analysis</span>
+              </a>
+            </li>
+            <li>
+              <a href="summary.html" class="nav-link">
+                <span class="icon">📝</span>
+                <span>Summary Generator</span>
+              </a>
+            </li>
+            <li>
+              <a href="qa.html" class="nav-link active">
+                <span class="icon">💬</span>
+                <span>Q&A Assistant</span>
+              </a>
+            </li>
+            <li>
+              <a href="profile.html" class="nav-link">
+                <span class="icon">👤</span>
+                <span>Profile</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-footer">
+          Ask about any text: strategy, penalties, or rules.
+        </div>
+      </aside>
+
+      <!-- ========== MAIN ========== -->
+      <main class="dashboard-main">
+        <header class="main-header">
+          <div class="main-header-title">
+            <h1>Q&amp;A Assistant</h1>
+            <p class="main-header-subtitle">
+              Paste F1 text, then ask targeted questions – or ask general F1
+              questions without context.
+            </p>
+          </div>
+          <div class="header-pills">
+            <div class="pill pill-muted" id="qa-status">
+              Provide context (optional) then ask a question.
+            </div>
+          </div>
+        </header>
+
+        <section class="tool-layout">
+          <!-- LEFT: CONTEXT + QUESTION -->
+          <section class="tool-card">
+            <div class="tool-input-header">
+              <div class="tool-input-title">
+                <h2>Context (optional)</h2>
+                <p>
+                  Paste race reports, radio transcripts, or regulation text that
+                  contains the answer – or leave it empty for general F1 Q&A.
+                </p>
+              </div>
+              <div class="tool-input-actions">
+                <label
+                  style="
+                    font-size: 12px;
+                    color: var(--text-muted);
+                    display: flex;
+                    align-items: center;
+                    gap: 6px;
+                  "
+                >
+                  Language
+                  <select id="qa-language">
+                    <option value="auto" selected>Auto</option>
+                    <option value="en">EN</option>
+                    <option value="ar">AR</option>
+                  </select>
+                </label>
+                <button type="button" class="btn-ghost" id="qa-clear">
+                  Clear
+                </button>
+              </div>
+            </div>
+
+            <textarea
+              id="qa-context"
+              placeholder="Paste the text that includes the answer (race summary, rules, radio messages...) or leave blank."
+            ></textarea>
+
+            <div style="margin-top: 12px;">
+              <label
+                for="qa-question"
+                style="
+                  display: block;
+                  font-size: 12px;
+                  color: var(--text-muted);
+                  margin-bottom: 4px;
+                "
+                >Your question</label
+              >
+              <input
+                type="text"
+                id="qa-question"
+                placeholder="Example: Why did Ferrari pit Leclerc during the safety car?"
+              />
+            </div>
+
+            <div
+              style="
+                margin-top: 12px;
+                display: flex;
+                justify-content: flex-end;
+              "
+            >
+              <button id="qa-ask-btn" class="btn" type="button">
+                <span>Get answer</span> <span>🔎</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- RIGHT: ANSWER -->
+          <section class="tool-card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Answer</h2>
+                <p class="card-subtitle">
+                  Uses context when provided, otherwise uses F1 knowledge +
+                  agents (calendar, drivers, tracks).
+                </p>
+              </div>
+              <span class="badge">
+                <span>Mode</span>
+                <strong>Explain · concise</strong>
+              </span>
+            </div>
+
+            <div
+              id="qa-answer"
+              style="
+                font-size: 13px;
+                line-height: 1.6;
+                color: #e5e7eb;
+                min-height: 120px;
+              "
+            >
+              The answer will appear here, with a short explanation referencing
+              the original text or F1 knowledge.
+            </div>
+
+            <div class="result-grid" style="margin-top: 16px;">
+              <div class="result-chip">
+                <label>Confidence</label>
+                <strong id="qa-confidence">–</strong>
+              </div>
+              <div class="result-chip">
+                <label>Evidence</label>
+                <strong id="qa-evidence">Quotes from context</strong>
+              </div>
+              <div class="result-chip">
+                <label>Follow-up idea</label>
+                <strong id="qa-followup">Ask about tyre strategy</strong>
+              </div>
+              <div class="result-chip">
+                <label>Language</label>
+                <strong id="qa-lang-display">Auto detect</strong>
+              </div>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        /* ====== 1) تحديث الهيدر من localStorage لو حابة تربطينه بالمستخدم ====== */
+        try {
+          const raw = localStorage.getItem("f1-profile-state");
+          if (raw) {
+            const data = JSON.parse(raw);
+            const userName = document.querySelector(".user-name");
+            const logoImg = document.querySelector(".team-logo-img");
+
+            if (userName) userName.textContent = data.name || "Guest";
+
+            if (logoImg) {
+              const team = data.team || "Red Bull Racing";
+              logoImg.src = `../assets/img/teams/${team
+                .toLowerCase()
+                .replace(/ /g, "")}.png`;
+            }
+          }
+        } catch (e) {
+          console.warn("Profile not loaded in QA page", e);
+        }
+
+        /* ====== 2) عناصر صفحة الـ Q&A ====== */
+        const contextEl = document.getElementById("qa-context");
+        const questionEl = document.getElementById("qa-question");
+        const langSelect = document.getElementById("qa-language");
+        const clearBtn = document.getElementById("qa-clear");
+        const askBtn = document.getElementById("qa-ask-btn");
+        const statusEl = document.getElementById("qa-status");
+
+        const answerEl = document.getElementById("qa-answer");
+        const confidenceEl = document.getElementById("qa-confidence");
+        const evidenceEl = document.getElementById("qa-evidence");
+        const followupEl = document.getElementById("qa-followup");
+        const langDisplayEl = document.getElementById("qa-lang-display");
+
+        const QA_API_URL = "http://127.0.0.1:8000/api/ai/qa";
+
+        function autoDetectLang(text) {
+          const arabicRegex = /[\u0600-\u06FF]/;
+          return arabicRegex.test(text) ? "ar" : "en";
+        }
+
+        if (clearBtn) {
+          clearBtn.addEventListener("click", () => {
+            if (contextEl) contextEl.value = "";
+            if (questionEl) questionEl.value = "";
+            if (answerEl)
+              answerEl.textContent =
+                "The answer will appear here, with a short explanation referencing the original text or F1 knowledge.";
+            if (confidenceEl) confidenceEl.textContent = "–";
+            if (evidenceEl) evidenceEl.textContent = "Quotes from context";
+            if (followupEl) followupEl.textContent = "Ask about tyre strategy";
+            if (langDisplayEl) langDisplayEl.textContent = "Auto detect";
+            if (statusEl)
+              statusEl.textContent =
+                "Provide context (optional) then ask a question.";
+          });
+        }
+
+        if (askBtn) {
+          askBtn.addEventListener("click", async () => {
+            const context = (contextEl?.value || "").trim();
+            const question = (questionEl?.value || "").trim();
+            const langChoice = langSelect?.value || "auto";
+
+            if (!question) {
+              statusEl.textContent = "Please enter your question.";
+              return;
+            }
+
+            // لو Auto → نكشف اللغة من context أو السؤال
+            let finalLang = langChoice;
+            if (langChoice === "auto") {
+              const base = context || question;
+              finalLang = autoDetectLang(base);
+            }
+
+            if (langDisplayEl) {
+              langDisplayEl.textContent =
+                finalLang === "ar" ? "Arabic" : "English";
+            }
+
+            const originalHTML = askBtn.innerHTML;
+            askBtn.disabled = true;
+            askBtn.innerHTML = "<span>Getting answer...</span> <span>⏳</span>";
+            statusEl.textContent = "Contacting F1 Q&A backend...";
+
+            try {
+              const resp = await fetch(QA_API_URL, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  context,
+                  question,
+                  language: finalLang,
+                }),
+              });
+
+              if (!resp.ok) {
+                throw new Error("HTTP " + resp.status);
+              }
+
+              const data = await resp.json();
+
+              const answerText =
+                data.answer || data.result || data.response || "";
+              if (answerText) {
+                answerEl.textContent = answerText;
+              } else {
+                answerEl.textContent =
+                  "No answer returned from the API. Please check the backend implementation.";
+              }
+
+              // confidence (لو رجع من الباكند)
+              if (confidenceEl) {
+                const c =
+                  typeof data.confidence === "number"
+                    ? data.confidence
+                    : typeof data.score === "number"
+                    ? data.score
+                    : null;
+                if (c !== null) {
+                  confidenceEl.textContent = `${Math.round(
+                    Math.abs(c) * 100
+                  )}%`;
+                } else {
+                  confidenceEl.textContent = "Not provided";
+                }
+              }
+
+              // evidence (لو رجع)
+              if (evidenceEl) {
+                if (Array.isArray(data.evidence) && data.evidence.length > 0) {
+                  evidenceEl.textContent = data.evidence
+                    .map((e) => e.text || e)
+                    .join(" · ");
+                } else if (data.evidence_text) {
+                  evidenceEl.textContent = data.evidence_text;
+                } else if (context) {
+                  evidenceEl.textContent = "Based on provided context.";
+                } else {
+                  evidenceEl.textContent = "From F1 knowledge / agents.";
+                }
+              }
+
+              // follow-up
+              if (followupEl) {
+                followupEl.textContent =
+                  data.followup ||
+                  (finalLang === "ar"
+                    ? "اسأل عن استراتيجية الإطارات."
+                    : "Ask about tyre strategy.");
+              }
+
+              statusEl.textContent = "Answer generated successfully.";
+            } catch (err) {
+              console.error("Q&A error", err);
+              statusEl.textContent =
+                "Error: could not get answer. Check backend or API URL.";
+              answerEl.textContent =
+                "Something went wrong while calling the Q&A API.";
+              if (confidenceEl) confidenceEl.textContent = "–";
+            } finally {
+              askBtn.disabled = false;
+              askBtn.innerHTML = originalHTML;
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
