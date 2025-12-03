@@ -59,6 +59,23 @@ def handle_query(payload: Dict[str, Any]) -> Dict[str, Any]:
         driver_id = payload.get("driver_id")
         lap = payload.get("lap")
 
+        low_q = question.lower()
+
+        #  أسئلة عامة)
+        definition_triggers = [
+            "what is formula 1",
+            "what is f1",
+            "what is drs",
+            "what is drag reduction system",
+            "ما هي الفورمولا 1",
+            "ماهي الفورمولا 1",
+            "ما هي f1",
+            "ماهو نظام drs",
+            "ما هو نظام drs",
+        ]
+        if any(kw in low_q for kw in definition_triggers):
+            return general_f1_answer(question)
+
         # إذا مافيه driver ولا lap → يا Calendar يا Knowledge يا General
         if not driver_id and lap is None:
             # 1) جدول السباقات (next / last / سباق دولة معينة)
@@ -69,10 +86,10 @@ def handle_query(payload: Dict[str, Any]) -> Dict[str, Any]:
             if is_knowledge_question(question):
                 return answer_knowledge_question(question)
 
-            # 3) سؤال عام عن F1 (مثل: what is DRS?)
+            # 3) سؤال عام عن F1 (مثل: what is DRS? ، strategies, rules ...)
             return general_f1_answer(question)
 
-        # هنا سؤال فعلي عن سباق / سائق / لفة → استخدم الـ QA المتقدم
+        
         return answer_question(**payload)
 
     # ---------- 2) Explicit general mode ----------
