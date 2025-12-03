@@ -1,0 +1,22 @@
+===== SENTIMENT EVALUATION =====
+Accuracy      : 0.733
+F1 (macro)    : 0.741
+F1 (weighted) : 0.741
+
+Classification report:
+              precision    recall  f1-score   support
+
+    negative       0.86      0.60      0.71        10
+     neutral       0.56      0.90      0.69        10
+    positive       1.00      0.70      0.82        10
+
+    accuracy                           0.73        30
+   macro avg       0.81      0.73      0.74        30
+weighted avg       0.81      0.73      0.74        30
+
+
+Confusion matrix [rows=true, cols=pred]:
+      neg  neu  pos
+ neg    6    4    0
+ neu    1    9    0
+ pos    0    3    7
