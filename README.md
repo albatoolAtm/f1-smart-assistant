@@ -53,7 +53,14 @@ Routes questions to the correct agent:
 - calendar_agent  
 - knowledge_agent  
 - qa_agent  
-- multilingual_agent  
+- multilingual_agent
+  
+## 📸 Demo
+
+![Home](screenshots/home.png)
+![Profile](screenshots/profile.png)
+![Q&A](screenshots/Q&A.png)
+![Summary](screenshots/summary.png)
 
 ---
 
